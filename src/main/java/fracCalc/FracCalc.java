@@ -59,7 +59,18 @@ public class FracCalc {
 		// separates the last operand which should just be the rest of the input
 		operand2 = input;
 
-		
+		while (operand2.indexOf(" ") > 0) {
+			int space3 = operand2.indexOf(" ");
+			String firstNumber = operand2.substring(0, space3);
+			String stringN = operand2.substring(space3 + 1, operand2.length());
+			int space4 = stringN.indexOf(" ");
+			String operator2 = stringN.substring(space4 - 1, space4);
+			operand2 = stringN.substring(space4 + 1, stringN.length());
+			String newEquation = operand1 + " " + operator + " " + firstNumber;
+			operand1 = produceAnswer(newEquation);
+			operator = operator2;
+		}
+
 		int num1;
 		int denom1;
 		int whole1;
@@ -70,7 +81,7 @@ public class FracCalc {
 		int whole2;
 		int slash2;
 		slash2 = operand2.indexOf("/");
-		//Parsing the first operand
+		// Parsing the first operand
 		if (under1 > 0) {
 			whole1 = Integer.parseInt(operand1.substring(0, under1));
 			if (slash1 > 0) {
@@ -91,7 +102,7 @@ public class FracCalc {
 				denom1 = 1;
 			}
 		}
-		//Parsing the second operand
+		// Parsing the second operand
 		int under2 = operand2.indexOf("_");
 		if (under2 > 0) {
 			whole2 = Integer.parseInt(operand2.substring(0, under2));
@@ -139,41 +150,41 @@ public class FracCalc {
 		else if (operator.equals("*")) {
 			numF = (num1 * num2);
 			denomF = (denom1 * denom2);
-		// Division operator function
+			// Division operator function
 		} else if (operator.equals("/")) {
 			numF = (num1 * denom2);
-			denomF = (denom1 * num2);		
-			if(num2 == 0) {
+			denomF = (denom1 * num2);
+			if (num2 == 0) {
 				return "ERROR: Cannot divide by 0";
 			}
 		}
-		//Error handling
-		if(denom1 == 0 || denom2 == 0) {
+		// Error handling
+		if (denom1 == 0 || denom2 == 0) {
 			return "ERROR: Cannot divide by zero.";
 		}
-		if(operator.length() > 1) {
+		if (operator.length() > 1) {
 			return "ERROR: Input is in an invalid format.";
 		}
-		//If denominator is negative, changes the numerator to 
-		//negative instead
+		// If denominator is negative, changes the numerator to
+		// negative instead
 		if (denomF < 0 && numF > 0) {
 			denomF *= -1;
 			numF *= -1;
 		}
-		//Declares an integer to make back into a mixed fraction
+		// Declares an integer to make back into a mixed fraction
 		int wholeF = 0;
-		//Used to make into a mixed fraction if numerator is positive
+		// Used to make into a mixed fraction if numerator is positive
 		while (numF / denomF >= 1) {
 			numF -= denomF;
 			wholeF += 1;
 		}
-		//Used to make into a mixed fraction if numerator is negative
+		// Used to make into a mixed fraction if numerator is negative
 		while (numF / denomF <= -1) {
 			numF += denomF;
 			wholeF -= 1;
 		}
-		//Makes both numerator and denominator positive for when there
-		//is a whole number so that the whole number becomes neg/pos
+		// Makes both numerator and denominator positive for when there
+		// is a whole number so that the whole number becomes neg/pos
 		if (wholeF != 0) {
 			numF = Math.abs(numF);
 			denomF = Math.abs(denomF);
